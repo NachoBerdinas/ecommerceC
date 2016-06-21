@@ -15,6 +15,7 @@ typedef struct Data{
     int maxUsers;
 }Data;
 
+void login(Data* data);
 int authenticate(char* user,char* password,Data* data);
 Supplier** getSuppliers();
 void initData(Data* data);
@@ -27,21 +28,76 @@ void showMenuUser();
 void showMenuSupplier();
 void showMenuSupport();
 
+void addUser(Data* data,User* user);
+void addSupplier(Data* data, Supplier* supplier);
+
+
 User* getUser(char* username,Data* data);
 Supplier* getSupplier(char* username,Data* data);
 PersonTechSupport* getPersonTechSupport(char* username,Data* data);
 
 Product* searchProduct(Data* data,int productId);
 
-
+void showMenu(){
+    printf("\n\n");
+    printf("1.Log in\n");
+    printf("2.Create person (Create first and then select the type of user)\n");
+    printf("3.Create user\n");
+    printf("4.Create tech support\n");
+    printf("5.Create supplier\n");
+}
 
 int main() {
-    char user[50];
-    char password[50];
-
     Data* data = malloc(sizeof(Data));
     initData(data);
+    int option;
+    char username[50];
+    char password[50];
+    char id[50];
+    char name[50];
+    char email[50];
+    Person* person;
+    do{
+        showMenu();
+        scanf("%d",&option);
+        switch (option){
+            case 1:
+                login(data);
+                break;
+            case 2:
+                printf("\nCreating a person:\n");
+                printf("Enter your username:\n");
+                scanf("%s", username);
+                printf("Enter your password:\n");
+                scanf("%s", password);
+                printf("Enter your ID:\n");
+                scanf("%s",id);
+                printf("Enter your name:\n");
+                scanf("%s", name);
+                printf("Enter your email:\n");
+                scanf("%s", email);
+                person = createPerson(name,id,username,password,email,NULL);
+                break;
+            case 3:
+                addUser(data,createUser(person,createShoppingCart(rand()%1000,data->users[data->numberOfUsers-1]->id+1),data->users[data->numberOfUsers-1]->id+1));
+                break;
+            case 4:
+                addSupplier(data,createSupplier(rand()%1000,person,rand()%1000));
+                break;
+            case 5:
+                addPersonTechSupport(createPersonTechSupport(person,rand()%100),data->techSupport);
+                break;
 
+
+        }
+    }while(option!=0);
+    login(data);
+
+}
+
+void login(Data* data){
+    char user[50];
+    char password[50];
 
     do{
         printf("\e[1;1H\e[2J");
@@ -417,16 +473,17 @@ void initData(Data* data){
     data->suppliers = malloc(sizeof(Supplier*)*data->maxSuppliers);
     data->users = malloc(sizeof(User*)* data->maxUsers);
 
-    Person* p1 = createPerson("Berdinas","39654315","nacho1","1","n@n.com","123456","a",NULL);
-    Person* p2 = createPerson("Cassol","39654315","nacho2","2","n@n.com","123456","a",NULL);
-    Person* p3 = createPerson("Nuñez","39654315","nacho3","3","n@n.com","123456","a",NULL);
-    Person* p4 = createPerson("Simone","39654315","nacho4","4","n@n.com","123456","a",NULL);
+    Person* p1 = createPerson("Ignacio","39654315","nacho","asdasd1","nacho@n.com",NULL);
+    Person* p2 = createPerson("Matias","33453455","mati","asdasd2","mati@n.com",NULL);
+    Person* p3 = createPerson("Patricio","32323244","pato","asdasd3","pato@n.com",NULL);
+    Person* p4 = createPerson("Bruno","3934234","bruno","asdasd4","bruno@n.com",NULL);
+    Person* p5 = createPerson("Tomas","33434315","tomas","asdasd5","bruno@n.com",NULL);
 
     Supplier* supplier = createSupplier(1,p1,1);
     Supplier* supplier1 = createSupplier(2,p2,2);
-    //PersonTechSupport* support = createPersonTechSupport(p2,3);
     User* user1 = createUser(p3,createShoppingCart(rand()%1000,10),10);
     User* user2 = createUser(p4,createShoppingCart(rand()%1000,15),15);
+    PersonTechSupport* support = createPersonTechSupport(p5,3);
 
     addUser(data,user1);
     addUser(data,user2);
@@ -443,6 +500,6 @@ void initData(Data* data){
 
     addSupplier(data,supplier);
     addSupplier(data,supplier1);
-    //addPersonTechSupport(support,data->techSupport);
+    addPersonTechSupport(support,data->techSupport);
 
 }

@@ -17,7 +17,7 @@ typedef struct Person{
     Address* address;
 }Person;
 
-Person* createPerson(char *name,char *ID, char *username,char* password, char *email, char *phoneNumber, char *type, Address* address);
+Person* createPerson(char *name,char *ID, char *username,char* password, char *email, Address* address);
 void destroyPerson(Person *person);
 
 
