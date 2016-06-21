@@ -17,7 +17,6 @@ typedef struct Data{
 
 void login(Data* data);
 int authenticate(char* user,char* password,Data* data);
-Supplier** getSuppliers();
 void initData(Data* data);
 
 void userMain(User* user,Data* data);
@@ -186,6 +185,7 @@ void userMain(User* user, Data* data){
                 printf("\nEnter the id of the product to remove");
                 scanf("%d",&option);
                 removeProductFromCart(shoppingCart,searchProduct(data,option));
+                break;
             case 5:
                 emptyShoppingCart(shoppingCart);
                 break;

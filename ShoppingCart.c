@@ -28,7 +28,6 @@ void addProductToCart(ShoppingCart *myShoppingCart, Product *p) {
     }
 }
 
-// Returns 1 if deleted, 0 if it was not found
 int removeProductFromCart(ShoppingCart *myShoppingCart, Product *p) {
     if(p!=NULL) {
         for (int i = 0; i < myShoppingCart->productCount; i++) {
