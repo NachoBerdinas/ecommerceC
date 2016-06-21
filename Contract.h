@@ -10,7 +10,7 @@ typedef struct Contract{
     int amount;
 }Contract;
 
-Contract* createContract(int id, char* description,int amount, int quantityOfProducts, char* creationDate);
+Contract* createContract(int id, char* description,int amount, char* creationDate);
 void destroyContract(Contract* contract);
 void printContract(Contract* contract);
 #endif //IMPLEMENTACIONES_CONTRACT_H

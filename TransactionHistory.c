@@ -1,7 +1,3 @@
-//
-// Created by Tomi on 12/05/2016.
-//
-
 #include "TransactionHistory.h"
 #include <stdlib.h>
 #include <stdio.h>

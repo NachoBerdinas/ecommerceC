@@ -71,7 +71,24 @@ int main() {
     }while (strcmp(user,"exit")!=0);
 }
 
-void userMain(User* user,Data* data){
+void createReceipts(int aux, const char *currentDate, const Bill *auxBill, const ShoppingCart *shoppingCartAux) {
+    for(int j = 0; j < shoppingCartAux->productCount; j++){
+        aux = shoppingCartAux->cart[j]->supplier->history->currentReceipts;
+        if(aux==0){
+            addReceipt(createPaymentReceipt(shoppingCartAux->cartID,strdup(currentDate)),shoppingCartAux->cart[j]->supplier->history);
+            aux = shoppingCartAux->cart[j]->supplier->history->currentReceipts;
+            addProduct(shoppingCartAux->cart[j],shoppingCartAux->cart[j]->supplier->history->receipts[aux-1]);
+        }else if(auxBill->shoppingCart->cart[j]->supplier->history->receipts[aux-1]->ID == auxBill->shoppingCart->cartID){
+            addProduct(shoppingCartAux->cart[j],shoppingCartAux->cart[j]->supplier->history->receipts[aux-1]);
+        }else{
+            addReceipt(createPaymentReceipt(shoppingCartAux->cartID,strdup(currentDate)),shoppingCartAux->cart[j]->supplier->history);
+            aux = shoppingCartAux->cart[j]->supplier->history->currentReceipts;
+            addProduct(shoppingCartAux->cart[j],shoppingCartAux->cart[j]->supplier->history->receipts[aux-1]);
+        }
+    }
+}
+
+void userMain(User* user, Data* data){
     printf("\e[1;1H\e[2J");
     int option = 0;
     ShoppingCart* shoppingCart = user->shoppingCart;
@@ -125,7 +142,6 @@ void userMain(User* user,Data* data){
                                       createContract(rand()%10000,
                                                      strdup(shoppingCart->cart[i]->description),
                                                      shoppingCart->cart[i]->price,
-                                                     1,
                                                      strdup(currentDate)));
                 }
                 addBill(transactionHistory,createBill(aux,strdup(currentDate),.5,rand()%1000,cloneCart(shoppingCart)));
@@ -138,7 +154,7 @@ void userMain(User* user,Data* data){
                 printf("\nEnter the id of the bill to pay\n");
                 scanf("%d",&option);
                 for(int i = 0; i<transactionHistory->billAmount;i++){
-                    if(option== transactionHistory->bills[i]->billID){
+                    if(option == transactionHistory->bills[i]->billID){
                         printf("\nEnter the amount you would like to pay with each way of payment.\n");
                         printf("\nTotal amount to pay is: %lf",transactionHistory->bills[i]->amount);
                         printf("\nEnter amount of credit,transfer,deposit");
@@ -148,23 +164,13 @@ void userMain(User* user,Data* data){
                         pay(transactionHistory->bills[i],rand()%1000,credit,transfer,deposit);
                         printf("Insert an address to send the package");
                         scanf("%s",string);
+                        printf("Before creating shipping");
                         transactionHistory->bills[i]->shipping = createShipping(100,"Fedex",0.1,strdup(string),option);
 
                         Bill* auxBill = transactionHistory->bills[i];
-
-                        for(int j = 0; j<auxBill->shoppingCart->productCount;j++){
-                            int aux =auxBill->shoppingCart->cart[j]->supplier->history->currentReceipts;
-
-                            if(auxBill->shoppingCart->cart[j]->supplier->history->receipts[aux]->ID == auxBill->shoppingCart->cartID){
-
-                                addProduct(auxBill->shoppingCart->cart[j],auxBill->shoppingCart->cart[j]->supplier->history->receipts[aux]);
-
-                            }else{
-
-                                addReceipt(createPaymentReceipt(auxBill->shoppingCart->cartID,strdup(currentDate),1),auxBill->shoppingCart->cart[j]->supplier->history);
-
-                            }
-                        }
+                        ShoppingCart* shoppingCartAux = auxBill->shoppingCart;
+                        printf("Entering For-loop ");
+                        createReceipts(aux, currentDate, auxBill, shoppingCartAux);
                     }
                 }
                 break;
@@ -181,7 +187,7 @@ void userMain(User* user,Data* data){
                 printf("\nEnter your question\n");
                 getchar();
                 scanf("%[^\n]",string);
-                addQuestion(createQuestionNoTopic(string,rand()%1000,currentDate,user),data->techSupport);
+                addQuestion(createQuestion(string, rand() % 1000, currentDate, user),data->techSupport);
                 break;
             case 11:
                 printf("\nMy questions\n");
@@ -202,7 +208,7 @@ void userMain(User* user,Data* data){
 void supplierMain(Supplier* supplier,Data* data){
     printf("\e[1;1H\e[2J");
     int option = 0;
-    int stock,price;
+    int stock,price,aux;
 
     char string[50];
     do{
@@ -237,6 +243,13 @@ void supplierMain(Supplier* supplier,Data* data){
                 for(int i = 0; i<supplier->currentProducts;i++){
                     printProduct(supplier->products[i]);
                 }
+                break;
+            case 5:
+                printf("\nEnter the id of the product");
+                scanf("%d",&aux);
+                printf("\nEnter the stock of the product");
+                scanf("%d",&stock);
+                addStock(stock,searchProduct(data,aux));
                 break;
         }
 
@@ -314,6 +327,7 @@ void showMenuSupplier() {
     printf("2.View contracts\n");
     printf("3.View payment receipt\n");
     printf("4.View my products\n");
+    printf("5.Add stock to product\n");
 }
 
 void showMenuSupport() {
@@ -411,8 +425,8 @@ void initData(Data* data){
     Supplier* supplier = createSupplier(1,p1,1);
     Supplier* supplier1 = createSupplier(2,p2,2);
     //PersonTechSupport* support = createPersonTechSupport(p2,3);
-    User* user1 = createUser(p3,createShoppingCart(1,10),10);
-    User* user2 = createUser(p4,createShoppingCart(2,15),15);
+    User* user1 = createUser(p3,createShoppingCart(rand()%1000,10),10);
+    User* user2 = createUser(p4,createShoppingCart(rand()%1000,15),15);
 
     addUser(data,user1);
     addUser(data,user2);

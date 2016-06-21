@@ -14,9 +14,6 @@ TechSupport* createTechSupport(){
     return myTechSupp;
 }
 
-/*
- * Returns the personTechSupport with the passed id or null if it does not exist
- */
 PersonTechSupport* searchPerTechSupp(TechSupport* myTechSupp, int perTechSuppID){
     for(int i = 0; i< myTechSupp->personsCurrent;i++){
         if(myTechSupp->myPersonTechSupp[i]->ID == perTechSuppID){
@@ -26,9 +23,6 @@ PersonTechSupport* searchPerTechSupp(TechSupport* myTechSupp, int perTechSuppID)
     return NULL;
 }
 
-/*
- * Returns the Question with the passed id or null if it does not exist
- */
 Question* searchQuestion(TechSupport* myTechSupp, int questionID){
     for(int i = 0; i< myTechSupp->questionsCurrent;i++){
         if(myTechSupp->myQuestions[i]->questionID == questionID){

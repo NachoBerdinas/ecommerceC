@@ -45,6 +45,7 @@ int removeProductFromCart(ShoppingCart *myShoppingCart, Product *p) {
 
 void emptyShoppingCart(ShoppingCart *myShoppingCart) {
     myShoppingCart->productCount = 0;
+    myShoppingCart->cartID = rand()%1000;
 }
 
 int shoppingCartIsEmpty(ShoppingCart *myShoppingCart){

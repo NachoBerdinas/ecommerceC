@@ -1,7 +1,3 @@
-//
-// Created by Tomas Piaggio on 6/16/16.
-//
-
 #ifndef TRABAJO_CUATRIMESTRAL_QUESTION_H
 #define TRABAJO_CUATRIMESTRAL_QUESTION_H
 
@@ -20,8 +16,7 @@ typedef struct {
 
 }Question;
 
-Question* createQuestion(char *questionContent, int questionID, char *date, User *myUser, Product *myProduct);
-Question* createQuestionNoTopic(char *questionContent, int questionID, char *date, User *myUser);
+Question* createQuestion(char *questionContent, int questionID, char *date, User *myUser);
 void printQuestion(Question* question);
 void destroyQuestion(Question* question);
 

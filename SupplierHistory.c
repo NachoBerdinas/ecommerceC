@@ -8,6 +8,7 @@ SupplierHistory* createSupplierHistory(int id) {
     SupplierHistory* supplierHistory;
     supplierHistory = (SupplierHistory*)malloc(sizeof(SupplierHistory));
     supplierHistory->maxReceipts = 5;
+    supplierHistory->currentReceipts = 0;
     supplierHistory->receipts = malloc(sizeof(PaymentReceipt*)*5);
     supplierHistory->id = id;
 

@@ -3,12 +3,11 @@
 #include <stdio.h>
 #include "Contract.h"
 
-Contract* createContract(int id, char* description,int amount, int quantityOfProducts, char* creationDate){
+Contract* createContract(int id, char* description,int amount,  char* creationDate){
     Contract* aux = malloc(sizeof(Contract));
     aux->id = id;
     aux->description = strdup(description);
     aux->creationDate = strdup(creationDate);
-    aux->quantityOfProducts = quantityOfProducts;
     aux->amount = amount;
     return aux;
 }

@@ -6,8 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//username with only letters or numbers
-//password with at least 6 characters
 typedef struct Person{
     char *name;
     char *ID;

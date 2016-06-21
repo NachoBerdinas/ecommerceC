@@ -12,8 +12,11 @@ Supplier* createSupplier(int aSupplierID, Person *aPerson, int aRifNumber) {
         supplier->history = createSupplierHistory(aSupplierID);
         supplier->rifNumber = aRifNumber;
         supplier->currentProducts = 0;
-        supplier->products = (Product **)malloc(10 * sizeof(Product));
+        supplier->products = (Product **)malloc(10 * sizeof(Product*));
         supplier->maxProducts = 10;
+        supplier->currentContracts = 0;
+        supplier->maxContracts = 10;
+        supplier->contracts = (Contract**)malloc(10* sizeof(Contract*));
     }
     return supplier;
 }
