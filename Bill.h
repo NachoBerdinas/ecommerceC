@@ -1,7 +1,3 @@
-//
-// Created by Tomi on 12/05/2016.
-//
-
 #ifndef ECOMERCE_BILL_H
 #define ECOMERCE_BILL_H
 

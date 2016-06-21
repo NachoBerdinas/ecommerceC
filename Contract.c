@@ -1,10 +1,6 @@
-//
-// Created by Ignacio Berdiñas on 6/19/16.
-//
-
 #include <stdlib.h>
 #include <memory.h>
-#include <printf.h>
+#include <stdio.h>
 #include "Contract.h"
 
 Contract* createContract(int id, char* description,int amount, int quantityOfProducts, char* creationDate){

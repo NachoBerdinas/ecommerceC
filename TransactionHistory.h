@@ -1,14 +1,9 @@
-//
-// Created by Tomi on 12/05/2016.
-//
-
 #ifndef ECOMERCE_TRANSACTIONHISTORY_H
 #define ECOMERCE_TRANSACTIONHISTORY_H
 
 #include "Bill.h"
 
 typedef struct TransactionHistory{
-
     int historyID;
     int userID;
     Bill** bills;

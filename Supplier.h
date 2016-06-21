@@ -4,16 +4,13 @@
 #include "SupplierHistory.h"
 #include "Contract.h"
 
-//
-// Created by matias on 5/11/16.
-//
 typedef struct Supplier {
-    int supplierID;
     Person* person;
-    int rifNumber;
     Product** products;
     SupplierHistory* history;
     Contract** contracts;
+    int supplierID;
+    int rifNumber;
     int currentContracts;
     int maxContracts;
     int currentProducts;

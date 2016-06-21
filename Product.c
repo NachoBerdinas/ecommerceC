@@ -3,12 +3,13 @@
 #include <memory.h>
 #include "Product.h"
 
-Product* createProduct(int ID, char *name, int initialQuantity, int weight, char *description, int price, int size){
+Product* createProduct(Supplier* supplier,int ID, char *name, int initialQuantity, int weight, char *description, int price, int size){
     Product* product = malloc(sizeof(Product));
     if(product){
         product->ID = ID;
+        product->supplier = supplier;
         product->name = strdup(name);
-        product->initialQuantity = initialQuantity;
+        product->actualQuantity = initialQuantity;
         product->weight = weight;
         product->description = strdup(description);
         product->price = price;

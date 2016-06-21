@@ -1,6 +1,4 @@
-//
-// Created by Tomi on 12/05/2016.
-//
+
 
 #include "Shipping.h"
 #include <stdio.h>
@@ -24,7 +22,7 @@ void printShipping(Shipping* shipping) {
     printf("Cost: %lf\n", shipping->shippingCost);
     printf("Tax Percentage: %lf\n", shipping->taxPercentage);
     printf("Business: %s\n", shipping->businessName);
-    printf("Adress: %s\n", shipping->adress);
+    printf("Address: %s\n", shipping->adress);
 }
 
 void destroyShipping(Shipping* shipping) {

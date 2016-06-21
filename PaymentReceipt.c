@@ -4,7 +4,7 @@
 #include <memory.h>
 #include "PaymentReceipt.h"
 
-PaymentReceipt* createPaymentReceipt(Product** products, int ID,  char* date,int productCount){
+PaymentReceipt* createPaymentReceipt(int ID,  char* date,int productCount){
     PaymentReceipt* paymentReceipt = malloc(sizeof(PaymentReceipt));
     if(paymentReceipt){
         paymentReceipt->products = malloc(productCount*2* sizeof(Product*));
@@ -12,10 +12,6 @@ PaymentReceipt* createPaymentReceipt(Product** products, int ID,  char* date,int
         paymentReceipt->productCount = productCount;
         paymentReceipt->price = 0;
 
-        for(int i=0;i<paymentReceipt->productCount;i++){
-            paymentReceipt-> price += products[i]->price;
-            paymentReceipt->products[i] = products[i];
-        }
 
         paymentReceipt->ID = ID;
 

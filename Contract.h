@@ -1,7 +1,3 @@
-//
-// Created by Ignacio Berdiñas on 6/19/16.
-//
-
 #ifndef IMPLEMENTACIONES_CONTRACT_H
 #define IMPLEMENTACIONES_CONTRACT_H
 

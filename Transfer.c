@@ -1,6 +1,3 @@
-//
-// Created by Diego Baldassare on 23/05/2016.
-//
 
 #include <stdio.h>
 #include <stdlib.h>

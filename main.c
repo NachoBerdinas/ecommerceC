@@ -7,12 +7,12 @@
 
 typedef struct Data{
     Supplier** suppliers;
+    User** users;
+    TechSupport* techSupport;
     int numberOfSuppliers;
     int maxSuppliers;
-    User** users;
     int numberOfUsers;
     int maxUsers;
-    TechSupport* techSupport;
 }Data;
 
 int authenticate(char* user,char* password,Data* data);
@@ -121,6 +121,12 @@ void userMain(User* user,Data* data){
                 for(int i = 0; i<shoppingCart->productCount;i++){
                     aux += shoppingCart->cart[i]->price;
                     buy(1,shoppingCart->cart[i]);
+                    addContractToList(shoppingCart->cart[i]->supplier,
+                                      createContract(rand()%10000,
+                                                     strdup(shoppingCart->cart[i]->description),
+                                                     shoppingCart->cart[i]->price,
+                                                     1,
+                                                     strdup(currentDate)));
                 }
                 addBill(transactionHistory,createBill(aux,strdup(currentDate),.5,rand()%1000,cloneCart(shoppingCart)));
                 emptyShoppingCart(shoppingCart);
@@ -143,6 +149,22 @@ void userMain(User* user,Data* data){
                         printf("Insert an address to send the package");
                         scanf("%s",string);
                         transactionHistory->bills[i]->shipping = createShipping(100,"Fedex",0.1,strdup(string),option);
+
+                        Bill* auxBill = transactionHistory->bills[i];
+
+                        for(int j = 0; j<auxBill->shoppingCart->productCount;j++){
+                            int aux =auxBill->shoppingCart->cart[j]->supplier->history->currentReceipts;
+
+                            if(auxBill->shoppingCart->cart[j]->supplier->history->receipts[aux]->ID == auxBill->shoppingCart->cartID){
+
+                                addProduct(auxBill->shoppingCart->cart[j],auxBill->shoppingCart->cart[j]->supplier->history->receipts[aux]);
+
+                            }else{
+
+                                addReceipt(createPaymentReceipt(auxBill->shoppingCart->cartID,strdup(currentDate),1),auxBill->shoppingCart->cart[j]->supplier->history);
+
+                            }
+                        }
                     }
                 }
                 break;
@@ -157,7 +179,7 @@ void userMain(User* user,Data* data){
                 break;
             case 10:
                 printf("\nEnter your question\n");
-                fseek(stdin,0,SEEK_END);
+                getchar();
                 scanf("%[^\n]",string);
                 addQuestion(createQuestionNoTopic(string,rand()%1000,currentDate,user),data->techSupport);
                 break;
@@ -196,7 +218,7 @@ void supplierMain(Supplier* supplier,Data* data){
                 scanf("%d",&stock);
                 printf("\nEnter the price of the product");
                 scanf("%d",&price);
-                addProductToList(supplier, createProduct(rand() % 100, strdup(string), stock, rand() % 1000, "This is a new product", rand() % 10, rand() % 10));
+                addProductToList(supplier, createProduct(supplier,rand() % 100, strdup(string), stock, rand() % 1000, "This is a new product", rand() % 10, rand() % 10));
                 break;
             case 2:
                 printf("\nShowing contracts....\n");
@@ -387,24 +409,26 @@ void initData(Data* data){
     Person* p4 = createPerson("Simone","39654315","nacho4","4","n@n.com","123456","a",NULL);
 
     Supplier* supplier = createSupplier(1,p1,1);
-    PersonTechSupport* support = createPersonTechSupport(p2,3);
+    Supplier* supplier1 = createSupplier(2,p2,2);
+    //PersonTechSupport* support = createPersonTechSupport(p2,3);
     User* user1 = createUser(p3,createShoppingCart(1,10),10);
     User* user2 = createUser(p4,createShoppingCart(2,15),15);
 
     addUser(data,user1);
     addUser(data,user2);
 
-    Product*  myProduct1 = createProduct(20001, "Nexus 6P", 5000, 300, "Smartphone", 450, 100);
-    Product*  myProduct2 = createProduct(20002, "Xiaomi Mi 4", 3700, 350, "Smartphone", 374, 120);
-    Product*  myProduct3 = createProduct(20003, "iPad Pro", 6540, 500, "Tablet", 786, 322);
-    Product*  myProduct4 = createProduct(20004, "iPad", 6540, 500, "Tablet", 786, 322);
+    Product*  myProduct1 = createProduct(supplier,20001, "Nexus 6P", 5000, 300, "Smartphone", 450, 100);
+    Product*  myProduct2 = createProduct(supplier,20002, "Xiaomi Mi 4", 3700, 350, "Smartphone", 374, 120);
+    Product*  myProduct3 = createProduct(supplier1,20003, "iPad Pro", 6540, 500, "Tablet", 786, 322);
+    Product*  myProduct4 = createProduct(supplier1,20004, "iPad", 6540, 500, "Tablet", 786, 322);
 
     addProductToList(supplier, myProduct1);
     addProductToList(supplier, myProduct2);
-    addProductToList(supplier, myProduct3);
-    addProductToList(supplier, myProduct4);
+    addProductToList(supplier1, myProduct3);
+    addProductToList(supplier1, myProduct4);
 
     addSupplier(data,supplier);
-    addPersonTechSupport(support,data->techSupport);
+    addSupplier(data,supplier1);
+    //addPersonTechSupport(support,data->techSupport);
 
 }

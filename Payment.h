@@ -1,7 +1,3 @@
-//
-// Created by Diego Baldassare on 23/05/2016.
-//
-
 #ifndef PAYMENT_H
 #define PAYMENT_H
 
