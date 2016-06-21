@@ -7,12 +7,12 @@ typedef struct PaymentReceipt{
     Product** products;
     int productCount;
     int productMax;
-    int ID;
+    int id;
     double price;
     char* date;
 } PaymentReceipt;
 
-PaymentReceipt* createPaymentReceipt(int ID,  char* date);
+PaymentReceipt* createPaymentReceipt(int id,  char* date);
 void destroyPaymentReceipt(PaymentReceipt *paymentReceipt);
 void addProduct(Product *product, PaymentReceipt *paymentReceipt);
 double getAmount(PaymentReceipt *paymentReceipt);

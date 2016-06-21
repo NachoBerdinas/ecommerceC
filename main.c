@@ -133,7 +133,7 @@ void createReceipts(int aux, const char *currentDate, const Bill *auxBill, const
             addReceipt(createPaymentReceipt(shoppingCartAux->cartID,strdup(currentDate)),shoppingCartAux->cart[j]->supplier->history);
             aux = shoppingCartAux->cart[j]->supplier->history->currentReceipts;
             addProduct(shoppingCartAux->cart[j],shoppingCartAux->cart[j]->supplier->history->receipts[aux-1]);
-        }else if(auxBill->shoppingCart->cart[j]->supplier->history->receipts[aux-1]->ID == auxBill->shoppingCart->cartID){
+        }else if(auxBill->shoppingCart->cart[j]->supplier->history->receipts[aux-1]->id == auxBill->shoppingCart->cartID){
             addProduct(shoppingCartAux->cart[j],shoppingCartAux->cart[j]->supplier->history->receipts[aux-1]);
         }else{
             addReceipt(createPaymentReceipt(shoppingCartAux->cartID,strdup(currentDate)),shoppingCartAux->cart[j]->supplier->history);
@@ -144,7 +144,6 @@ void createReceipts(int aux, const char *currentDate, const Bill *auxBill, const
 }
 
 void userMain(User* user, Data* data){
-    printf("\e[1;1H\e[2J");
     int option = 0;
     ShoppingCart* shoppingCart = user->shoppingCart;
     TransactionHistory* transactionHistory = user->transactions;
@@ -200,7 +199,7 @@ void userMain(User* user, Data* data){
                                                      shoppingCart->cart[i]->price,
                                                      strdup(currentDate)));
                 }
-                addBill(transactionHistory,createBill(aux,strdup(currentDate),.5,rand()%1000,cloneCart(shoppingCart)));
+                addBill(transactionHistory,createBill(aux,strdup(currentDate),.21,rand()%1000,cloneCart(shoppingCart)));
                 emptyShoppingCart(shoppingCart);
                 break;
             case 7:
@@ -213,19 +212,19 @@ void userMain(User* user, Data* data){
                     if(option == transactionHistory->bills[i]->billID){
                         printf("\nEnter the amount you would like to pay with each way of payment.\n");
                         printf("\nTotal amount to pay is: %lf",transactionHistory->bills[i]->amount);
-                        printf("\nEnter amount of credit,transfer,deposit");
+                        printf("\nEnter amount of credit");
                         scanf("%d",&credit);
+                        printf("\nEnter amount of transfer");
                         scanf("%d",&transfer);
+                        printf("\nEnter amount of deposit");
                         scanf("%d",&deposit);
                         pay(transactionHistory->bills[i],rand()%1000,credit,transfer,deposit);
                         printf("Insert an address to send the package");
                         scanf("%s",string);
-                        printf("Before creating shipping");
                         transactionHistory->bills[i]->shipping = createShipping(100,"Fedex",0.1,strdup(string),option);
 
                         Bill* auxBill = transactionHistory->bills[i];
                         ShoppingCart* shoppingCartAux = auxBill->shoppingCart;
-                        printf("Entering For-loop ");
                         createReceipts(aux, currentDate, auxBill, shoppingCartAux);
                     }
                 }

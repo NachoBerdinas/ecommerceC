@@ -4,14 +4,14 @@
 #include <memory.h>
 #include "PaymentReceipt.h"
 
-PaymentReceipt* createPaymentReceipt(int ID,  char* date){
+PaymentReceipt* createPaymentReceipt(int id,  char* date){
     PaymentReceipt* paymentReceipt = malloc(sizeof(PaymentReceipt));
     if(paymentReceipt){
         paymentReceipt->products = malloc(10* sizeof(Product*));
         paymentReceipt->productMax = 10;
         paymentReceipt->productCount = 0;
         paymentReceipt->price = 0;
-        paymentReceipt->ID = ID;
+        paymentReceipt->id = id;
         paymentReceipt->date = strdup(date);
     }
     return paymentReceipt;
@@ -36,11 +36,11 @@ double getAmount(PaymentReceipt *paymentReceipt){
 }
 
 int getPaymentReceiptID(PaymentReceipt *paymentReceipt){
-    return paymentReceipt->ID;
+    return paymentReceipt->id;
 }
 
 void printPaymentReceipt(PaymentReceipt* receipt){
-    printf("\n\tReceipt: %d",receipt->ID);
+    printf("\n\tReceipt: %d",receipt->id);
     for(int i=0;i<receipt->productCount;i++){
         printProduct(receipt->products[i]);
     }

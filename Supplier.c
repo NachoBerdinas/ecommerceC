@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include "Supplier.h"
 
-Supplier* createSupplier(int aSupplierID, Person *aPerson, int aRifNumber) {
+Supplier* createSupplier(int id, Person *aPerson, int aRifNumber) {
     Supplier* supplier = (Supplier*)malloc(sizeof(Supplier));
 
     if (supplier != NULL) {
-        supplier->supplierID = aSupplierID;
+        supplier->supplierID = id;
         supplier->person = aPerson;
-        supplier->history = createSupplierHistory(aSupplierID);
+        supplier->history = createSupplierHistory(id);
         supplier->rifNumber = aRifNumber;
         supplier->currentProducts = 0;
         supplier->products = (Product **)malloc(10 * sizeof(Product*));

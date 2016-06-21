@@ -17,7 +17,7 @@ typedef struct Supplier {
     int maxProducts;
 } Supplier;
 
-Supplier* createSupplier(int aSupplierID, Person *person, int aRifNumber);
+Supplier* createSupplier(int id, Person *person, int aRifNumber);
 void destroySupplier(Supplier* s);
 int getSupplierID(Supplier* s);
 char* getPersonID(Supplier* s);
