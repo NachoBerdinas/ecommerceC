@@ -1,7 +1,7 @@
 #ifndef AYED_PAYMENTRECEIPT_H
 #define AYED_PAYMENTRECEIPT_H
 
-#include "product.h"
+#include "Product.h"
 
 typedef struct PaymentReceipt{
     Product** products;

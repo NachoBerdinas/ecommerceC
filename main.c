@@ -1,5 +1,6 @@
-#include <printf.h>
+#include <stdio.h>
 #include <memory.h>
+#include <time.h>
 #include "Supplier.h"
 #include "Payment.h"
 #include "TechSupport.h"
@@ -156,7 +157,8 @@ void userMain(User* user,Data* data){
                 break;
             case 10:
                 printf("\nEnter your question\n");
-                scanf("%[^\n]s",string);
+                fseek(stdin,0,SEEK_END);
+                scanf("%[^\n]",string);
                 addQuestion(createQuestionNoTopic(string,rand()%1000,currentDate,user),data->techSupport);
                 break;
             case 11:
@@ -243,7 +245,8 @@ void supportMain(PersonTechSupport* personTechSupport, Data* data){
                 printf("\nInsert id of question tu answer....\n");
                 scanf("%d",&option);
                 printf("\nInsert response to question....\n");
-                scanf("%[^\n]s",string);
+                fseek(stdin,0,SEEK_END);
+                scanf("%[^\n]",string);
                 giveAnswer(data->techSupport,personTechSupport,option,string);
                 break;
         }

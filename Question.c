@@ -1,11 +1,6 @@
-//
-// Created by Tomas Piaggio on 6/16/16.
-//
-
-
 #include <stdlib.h>
 #include <memory.h>
-#include <printf.h>
+#include <stdio.h>
 #include "Question.h"
 
 
@@ -16,6 +11,7 @@ Question* createQuestion(char *questionContent, int questionID, char *creationDa
     myQuestion->creationDate = strdup(creationDate);
     myQuestion->asker = myUser;
     myQuestion->topic = myProduct;
+    myQuestion->answer = NULL;
 
     return myQuestion;
 }
@@ -30,13 +26,18 @@ Question* createQuestionNoTopic(char *questionContent, int questionID, char *cre
     myQuestion->creationDate = strdup(creationDate);
     myQuestion->asker = myUser;
     myQuestion->topic = NULL;
+    myQuestion->answer = NULL;
 
     return myQuestion;
 }
 
 void printQuestion(Question* question){
-    printf("Question ID: %d", question->questionID);
-    printf("Question Content: %s", question->questionContent);
+    printf("\nQuestion ID: %d", question->questionID);
+    printf("\nQuestion Content: %s", question->questionContent);
+    if(question->answer!=NULL){
+        printf("\nQuestion Answer: %s", question->answer);
+    }
+
 }
 
 void destroyQuestion(Question* question){
